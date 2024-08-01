@@ -23,6 +23,7 @@ class TradingResult(Base):
         updated_on (datetime): Дата и время последнего обновления записи.
     """
     __tablename__ = "spimex_trading_result_async"
+
     id = Column(Integer, primary_key=True, index=True)
     exchange_product_id = Column(String)
     exchange_product_name = Column(String)
@@ -34,5 +35,5 @@ class TradingResult(Base):
     total = Column(Integer)
     count = Column(Integer)
     date = Column(DateTime)
-    created_on = Column(DateTime, default=datetime.now(timezone.utc))
-    updated_on = Column(DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    created_on = Column(DateTime)
+    updated_on = Column(DateTime)

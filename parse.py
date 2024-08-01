@@ -1,9 +1,11 @@
 import pandas as pd
+from datetime import datetime
 from io import BytesIO
 from typing import List
-from template_data import column_indices, column_names_mapping
-from models import TradingResult
+
 from database import save_to_database
+from models import TradingResult
+from template_data import column_indexes, column_names_mapping
 
 
 def is_unit_of_measurement_metric_ton(file: pd.DataFrame, row: int, col: int) -> bool:
@@ -74,7 +76,7 @@ async def fetch_excel_and_process(session, url: str, file_date: str):
                     data_without_headers_and_totals, column=14)
                 data_to_insert: List[TradingResult] = []
 
-                for col in contracts_with_positive_count.iloc[:, list(column_indices.values())].values:
+                for col in contracts_with_positive_count.iloc[:, list(column_indexes.values())].values:
                     exchange_product_id: str = col[column_names_mapping['exchange_product_id']]
                     exchange_product_name: str = col[column_names_mapping['exchange_product_name']]
                     delivery_basis_name: str = col[column_names_mapping['delivery_basis_name']]
@@ -92,7 +94,8 @@ async def fetch_excel_and_process(session, url: str, file_date: str):
                         volume=volume,
                         total=total,
                         count=count,
-                        date=file_date
+                        created_on=datetime.now(),
+                        updated_on=datetime.now()
                     )
                     data_to_insert.append(data)
                 await save_to_database(data_to_insert)
