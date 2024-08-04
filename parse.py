@@ -78,6 +78,9 @@ async def fetch_excel_and_process(session, url: str, file_date: date):
                 data_to_insert: List[TradingResult] = []
 
                 for col in contracts_with_positive_count.iloc[:, list(column_indexes.values())].values:
+                    if pd.isna(col).any():
+                        continue
+
                     exchange_product_id: str = col[column_names_mapping['exchange_product_id']]
                     exchange_product_name: str = col[column_names_mapping['exchange_product_name']]
                     delivery_basis_name: str = col[column_names_mapping['delivery_basis_name']]

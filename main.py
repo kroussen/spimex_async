@@ -38,7 +38,7 @@ async def main() -> None:
         None
     """
     start_date = datetime(2023, 1, 1)
-    end_date = datetime(2023, 2, 1)
+    end_date = datetime(2023, 6, 1)
     await create_tables()
     await generate_urls_and_fetch(start_date, end_date)
 
