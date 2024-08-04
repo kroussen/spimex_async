@@ -2,6 +2,7 @@ import pandas as pd
 from datetime import datetime
 from io import BytesIO
 from typing import List
+from datetime import date
 
 from database import save_to_database
 from models import TradingResult
@@ -54,7 +55,7 @@ def get_positive_data_by_column(file: pd.DataFrame, column: int) -> pd.DataFrame
     return contracts_with_multiple_entries
 
 
-async def fetch_excel_and_process(session, url: str, file_date: str):
+async def fetch_excel_and_process(session, url: str, file_date: date):
     """
     Загружает Excel файл по указанному URL, обрабатывает его и сохраняет данные в базу данных.
 
@@ -94,6 +95,7 @@ async def fetch_excel_and_process(session, url: str, file_date: str):
                         volume=volume,
                         total=total,
                         count=count,
+                        date=file_date,
                         created_on=datetime.now(),
                         updated_on=datetime.now()
                     )

@@ -25,7 +25,7 @@ async def generate_urls_and_fetch(start_date: datetime, end_date: datetime) -> N
         while current_date < end_date:
             date_str = current_date.strftime('%Y%m%d')
             url = f'https://spimex.com/upload/reports/oil_xls/oil_xls_{date_str}162000.xls'
-            tasks.append(fetch_excel_and_process(session, url, current_date.strftime('%Y-%m-%d')))
+            tasks.append(fetch_excel_and_process(session, url, current_date))
             current_date += timedelta(days=1)
         await asyncio.gather(*tasks)
 
